@@ -1,10 +1,12 @@
 import requests
 import lxml.html as html
+from pprint import pprint
 
-XPATH_TEST = '//div[@class="nba-stat-table__overflow"]/table/tbody/tr/td[@class="player-name first"]'
-XPATH_TEST2 = '//div/table/tbody/tr/td[@class="player-name first"]/text()'
+XPATH_TEST = '//a[class="keychainify-checked"]/text()'
+XPATH_TEST2 = '//a/text()'
+XPATH_TEST3 = '//a[@class]/text()'
 
-HOME_URL = 'https://www.nba.com/stats/players/boxscores/?Season=2021-22&SeasonType=Regular%20Season&DateFrom=04%2F04%2F2022&DateTo=04%2F05%2F2022'
+HOME_URL = 'https://erikberg.com/mlb/scores/2022-04-14'
 
 def parse_home():
     try:
@@ -12,9 +14,9 @@ def parse_home():
         if response.status_code == 200:
             home = response.content.decode('utf-8')
             parsed = html.fromstring(home)
-            print(parsed)
-            list_row = parsed.xpath(XPATH_TEST2)
-            print(list_row)
+            pprint(parsed)
+            list_row = parsed.xpath(XPATH_TEST3)
+            pprint(list_row)
         else:
             raise ValueError(f'Error: {response.status_code}')
     except ValueError as ve:
